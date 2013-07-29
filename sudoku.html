@@ -1,0 +1,60 @@
+<title>Sudoku</title>
+<style>
+	table { border-collapse:collapse; }
+	table, th, td { border: solid 1px black; }
+	td {
+		width:30px;
+		height:30px;
+		text-align:center;
+	}
+	.vline { border-left: solid 4px; }
+	.hline { border-top: solid 4px; }
+	ol {
+		list-style-type:none;
+	}
+	li {
+		border: solid 1px;
+		float: left;
+	}
+</style>
+Sudoku
+<table id='board'>
+	<tr><td><td><td><td class="vline"><td><td><td class="vline"><td><td>
+	<tr><td><td><td><td class="vline"><td><td><td class="vline"><td><td>
+	<tr><td><td><td><td class="vline"><td><td><td class="vline"><td><td>
+	<tr class="hline"><td><td><td><td class="vline"><td><td><td class="vline"><td><td>
+	<tr><td><td><td><td class="vline"><td><td><td class="vline"><td><td>
+	<tr><td><td><td><td class="vline"><td><td><td class="vline"><td><td>
+	<tr class="hline"><td><td><td><td class="vline"><td><td><td class="vline"><td><td>
+	<tr><td><td><td><td class="vline"><td><td><td class="vline"><td><td>
+	<tr><td><td><td><td class="vline"><td><td><td class="vline"><td><td>
+</table>
+<br>
+<table id='numbers'><td>1<td>2<td>3<td class="vline">4<td>5<td>6<td class="vline">7<td>8<td>9</table>
+<script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+<script>
+var number;
+function choose(num) {
+	num--;
+	$('#numbers td').css('background-color', 'white');
+	$('#numbers td:eq('+num+')').css('background-color', 'yellow');
+	number = num;
+}
+function mark(pos) {
+	$('#board td:eq('+pos+')').text(number+1);
+}
+$(function(){
+	choose(1);
+	$('body').css('background-color', 'lightblue');
+	$('#board').on('click', function(event) {
+		var $target = $(event.target);
+		var i = $("#board td").index(event.target);
+		mark(i);
+	});
+	$('#numbers').on('click', function(ev) {
+		var $target = $(ev.target);
+		var i = $("#numbers td").index(ev.target);
+		choose(i + 1);
+	});
+})
+</script>
