@@ -1,5 +1,10 @@
 $.widget("thms.board", {
-	options: {},
+	options: {
+		highlight: { "background-color": "#CC4" },
+		background: { "background-color": "white" },
+		clue: { "font-weight": "bolder", "font-size": "x-large" },
+		mark: { "font-weight": "normal", "font-size": "medium" },
+	},
 	_create: function() {
 		this._makeElements();
 		this._drawLines();
@@ -14,6 +19,7 @@ $.widget("thms.board", {
 			}
 			table.append(tr);
 		}
+		table.css(this.options.background);
 		this.element.append(table);
 	},
 	_drawLines: function() {
@@ -32,6 +38,16 @@ $.widget("thms.board", {
 	cell: function(pos) { return this.element.find("td").eq(pos); },
 	row: function(i) { return this.element.find("tr").eq(i).children(); },
 	col: function(i) { return this.element.find("td:nth-child(" + (i + 1) + ")"); },
-	mark: function(pos, num) { this.cell(pos).text(num); },
+	mark: function(pos, num, clue) {
+		var cell = this.cell(pos);
+		cell.text(num);
+		if (clue) {
+			cell.css(this.options.clue);
+		} else {
+			cell.css(this.options.mark);
+		}
+	},
 	val: function(pos) { return this.cell(pos).text(); },
+	highlight: function(pos) { this.cell(pos).css(this.options.highlight); },
+	unhighlight: function(pos) { this.cell(pos).css(this.options.background); },
 });
